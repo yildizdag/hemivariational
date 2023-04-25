@@ -42,6 +42,4 @@ for i=1:step_max
         lm = lm + del_lm;
         count = count + 1;
     end
-    u0 = u;
-    lm0 = lm;
 end
