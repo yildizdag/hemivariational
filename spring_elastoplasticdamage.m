@@ -3,26 +3,27 @@
 % Single Spring
 % Hemivariational Elasto-Plastic-Damage Model
 % Newton-Raphson Iterative Solver
+clear; clc;
 %---------------------------------------------------------------
 %---------------------------------------------------------------
 k_el = 1;
 kt = 1;
-kd = 8;
-dmax = 0.02;
-st = (1-dmax)*sqrt(2*k_el*(dmax*kd+kt));
+kd = 4;
+dmax = 0.08;
+st = 1*(1-dmax)*sqrt(2*k_el*(dmax*kd+kt));
 sc = st;
-Kbar = 100000*k_el;
+Kbar = 1E9*k_el;
 %
-umax = 4;
-N = 100;
+umax = 2;
+N = 500;
 ubar = [linspace(umax/(N),umax,N), linspace(umax-(umax/(N)),-umax,2*N+1), linspace(-umax+(umax/(N)),0,N)];
 U = [0; 0; 0; 0];
 delU = ones(4,1);
 dStore = zeros(N,4);
-TOL = 1E-3;
+TOL = 1E-12;
 norm_dif = 1;
 contatore = 0;
-for i = 1:length(ubar)
+for i = 1:N
     ubar_i = ubar(i);
     disp(ubar_i)
     while norm_dif > TOL
@@ -45,22 +46,22 @@ for i = 1:length(ubar)
         end
         delU = KT\(-R);
         U(1) = U(1) + delU(1);
-        if delU(2)>0
+        if delU(2)>1E-6 && ((k_el/(2*kd))*(U(1)-U(3)+U(4))^2-(kt/kd))>0
             U(2) = U(2) + delU(2);
         else
             delU(2) = 0;
         end
-        if delU(3)>0
+        if U(3) > 0
             U(3) = U(3) + delU(3);
         else
             delU(3) = 0;
         end
-        if delU(4)>0
-            U(4) = U(4) + delU(4);
-        else
-            delU(4) = 0;
-        end
         norm_dif = norm(delU);
+%         if delU(4)>0
+%             U(4) = U(4) + delU(4);
+%         else
+%             delU(4) = 0;
+%         end
         contatore = contatore + 1;
     end
     delU = ones(4,1);

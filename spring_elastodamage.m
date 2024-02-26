@@ -4,6 +4,7 @@
 % Hemivariational Elasto-Damage Model
 % Newton-Raphson Iterative Solver
 % with Arc-Length Method
+clear; clc;
 %---------------------------------------------------------------
 %---------------------------------------------------------------
 k_el = 1;
@@ -19,7 +20,7 @@ f1 = @(u,d,lm) k_el*(1-d)*u-lm*F;
 f2 = @(u,d,lm) kt+kd*d-0.5*k_el*u^2;
 f3 = @(u,u0,lm,lm0) ((lm-lm0)^2)/(lm_max^2)+((u-u0)^2)/(u_max^2);
 %
-u = 0.001;
+u = 0;
 d = 0;
 lm = 0.001;
 del_u = 1;
