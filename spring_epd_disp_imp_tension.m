@@ -81,7 +81,7 @@ for i=1:N
                 dU = -R/KT;
                 u1(1) = u0(1) + dU;
             end
-            enorm = abs((energy_epd(k1,kd,kt,st,sc,Kp,ui,u1)-energy_epd(k1,kd,kt,st,sc,Kp,ui,u0))/energy_epd(k1,kd,kt,st,sc,Kp,ui,u0));
+            enorm = abs((spring_energy_epd(k1,kd,kt,st,sc,Kp,ui,u1)-spring_energy_epd(k1,kd,kt,st,sc,Kp,ui,u0))/spring_energy_epd(k1,kd,kt,st,sc,Kp,ui,u0));
             u0 = u1;
         % CHECK FIRST COMPRESSION THEN KKT CONDITIONS
         elseif ((U(i,1)-U(i,3)+U(i,4))<0)
@@ -136,7 +136,7 @@ for i=1:N
                 dU = -R/KT;
                 u1(1) = u0(1) + dU;
             end
-            enorm = abs((energy_epd(k1,kd,kt,st,sc,Kp,ui,u1)-energy_epd(k1,kd,kt,st,sc,Kp,ui,u0))/energy_epd(k1,kd,kt,st,sc,Kp,ui,u0));
+            enorm = abs((spring_energy_epd(k1,kd,kt,st,sc,Kp,ui,u1)-spring_energy_epd(k1,kd,kt,st,sc,Kp,ui,u0))/spring_energy_epd(k1,kd,kt,st,sc,Kp,ui,u0));
             u0 = u1;
         end
         count = count + 1;
