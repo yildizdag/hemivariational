@@ -1,7 +1,7 @@
 %-------------------------------------------
 %-------------------------------------------
 % Single Spring Displacement Control
-% Hemivariational Elasto-Damage Model
+% Hemivariational Elasto-Plastic-Damage Model
 % Newton-Raphson Solver with Penalty Formulation
 clear; clc;
 %-------------------------------------------
@@ -10,7 +10,7 @@ k1=1;
 k2=1;
 kt = 1;
 kd = 8;
-st = 1.8;
+st = 1.76;
 sc = st;
 ubar = 4;
 N = 100;
@@ -20,15 +20,9 @@ u = [0, 0, 0, 0];
 U = zeros(N+1,4);
 F = zeros(N+1,1);
 count = 0;
-for i=1:4*N
+for i=1:N
     % Displacement Step
-    if i<N+1
-        ui = (i/N)*ubar;
-    elseif i<3*N+1
-        ui = ubar-((i-N)/N)*ubar;
-    elseif i<4*N+1
-        ui = -ubar+((i-3*N)/N)*ubar;
-    end
+    ui = (i/N)*ubar;
     U(i+1,1) = ui;
     U(i+1,2) = ((k1/(2*kd))*(U(i+1,1)-U(i,3)+U(i,4))^2-kt/kd);
     if U(i+1,2) <= U(i,2)

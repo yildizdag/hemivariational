@@ -12,7 +12,7 @@ kd = 8;
 st = 1.82;
 sc = st;
 ubar = 4;
-Kp = 1E9*k;
+Kp = 1E6*k;
 N = 2000;
 % Initial State (disp-damage-plastic/tension-plastic/comp)
 u0 = [0, 0, 0, 0];
@@ -21,7 +21,7 @@ u1 = [0, 0, 0, 0];
 U = zeros(N+1,4);
 F = zeros(N+1,1);
 enorm = 1;
-TOL = 1E-6;
+TOL = 1E-8;
 count = 0;
 for i=1:N
     % Displacement Step

@@ -1,16 +1,16 @@
-%-------------------------------------------
-%-------------------------------------------
-% Single Spring Displacement Control
-% Hemivariational Elasto-Damage Model
-% Newton-Raphson Solver with Penalty Formulation
-%-------------------------------------------
-%-------------------------------------------
+%----------------------------------------------
+%----------------------------------------------
+% Single Spring Hemivariational Elasto-Damage Model
+% Displacement Control NEWTON-RAPHSON
+% Penalty Formulation to apply Dirichlet BC
+%----------------------------------------------
+%----------------------------------------------
 k = 1;
 kt = 1;
 kd = 8;
 ubar = 4.0;
 Kp = 1E6*k;
-N = 100;
+N = 50;
 % Initial State (disp-damage)
 u0 = [0, 0];
 u1 = [0, 0];
@@ -36,7 +36,9 @@ for i=1:N
         if u1(2) > 1
             u1(2) = 1;
         end
-        enorm = abs((energy_elastodamage(k,kd,kt,Kp,ui,u1(1),u1(2))-energy_elastodamage(k,kd,kt,Kp,ui,u0(1),u0(2)))/energy_elastodamage(k,kd,kt,Kp,ui,u0(1),u0(2)));
+        e1 = etot_edamage(k,kd,kt,Kp,ui,u1(1),u1(2));
+        e0 = etot_edamage(k,kd,kt,Kp,ui,u0(1),u0(2));
+        enorm = abs((e1-e0)/e0);
         u0 = u1;
         count = count + 1;
     end

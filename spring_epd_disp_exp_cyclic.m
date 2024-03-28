@@ -1,19 +1,20 @@
-%-------------------------------------------
-%-------------------------------------------
+%---------------------------------------
+%---------------------------------------
 % Single Spring Displacement Control
 % Hemivariational Elasto-Damage Model
-% Newton-Raphson Solver with Penalty Formulation
+% Explicit Solver
+% Loading
 clear; clc;
-%-------------------------------------------
-%-------------------------------------------
+%---------------------------------------
+%---------------------------------------
 k1=1;
 k2=1;
 kt = 1;
 kd = 8;
-st = 1.8;
+st = 1.76;
 sc = st;
 ubar = 4;
-N = 100;
+N = 1000;
 % Initial State (disp-damage-plastic/tension-plastic/comp)
 u = [0, 0, 0, 0];
 % Storage

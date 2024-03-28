@@ -8,11 +8,11 @@ clear; clc;
 %---------------------------------------------------------------
 k_el = 1;
 kt = 1;
-kd = 4;
+kd = 8;
 dmax = 0.08;
 st = 1*(1-dmax)*sqrt(2*k_el*(dmax*kd+kt));
 sc = st;
-Kbar = 1E9*k_el;
+Kbar = 1E6*k_el;
 %
 umax = 2;
 N = 500;
