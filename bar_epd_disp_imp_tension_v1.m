@@ -30,40 +30,42 @@ ne = 1;
 nn = ne+1;
 x = linspace(0,L,nn);
 h = L/ne;
-edof = 5;
-conn = zeros(ne,edof);
-dof = nn+3*ne;
+ndof = 3;
+econn = zeros(ne,2);
+sconn = zeros(ne,2*ndof);
+dof = ndof*nn;
 for e = 1:ne
-    conn(e,1:2) = [e, e+1];
-    conn(e,3:5) = [(3*e-2)+nn, (3*e-1)+nn, (3*e)+nn];
+    econn(e,:) = [e, e+1];
+    sconn(e,:) = [6*e-5, 6*e-4, 6*e-3, 6*e-2, 6*e-1, 6*e];
 end
 %Storage
-U = zeros(dof,ustep+1);
-F = zeros(ustep+1,1);
+U = zeros(nn,ustep+1);
+D = zeros(nn,ustep+1);
+LT = zeros(nn,ustep+1);
+LC = zeros(nn,ustep+1);
 TOL = 1E-12;
 count = 0;
 for i=1:ustep
     % Displacement Step
     ui = (i/ustep)*ubar;
     U0 = U(:,i); U1 = U(:,i);
+    D0 = D(:,i); D1 = D(:,i);
+    LT0 = LT(:,i); LT1 = LT(:,i);
+    LC0 = LC(:,i); LC1 = LC(:,i);
     enorm = 1;
     while enorm > TOL
         
         KT = zeros(dof,dof);
         R = zeros(dof,1);
-        ndof = 1:dof;
         
         for e = 1:ne
-            
-            lm = conn(e,:);
-            
-            if ( (1/h)*(U(lm(2),i)-U(lm(1),i))-U(lm(4),i)+U(lm(5),i) ) >= 0
+            % Element Connectivity:
+            lm = econn(e,:);
+            slm = sconn(e,:);
+            % Check State:
+            if ( (1/h)*(U(lm(2),i)-U(lm(1),i))-0.5*(LT(lm(1),i)+LT(lm(2),i))+0.5*(LC(lm(1),i)+LC(lm(2),i)) ) >= 0
                 
-                if (((k/(2*kd))*(((1/h)*(U0(lm(2))-U0(lm(1)))-U0(lm(4))+U0(lm(5))))^2-kt/kd) > 0) && ((((1/h)*(U0(lm(2))-U0(lm(1))) + U0(lm(5)))-st/(k*(1-U0(lm(3))))) > 0) 
-                    
-                    
-                
-            elseif ( (1/h)*(U(lm(2),i)-U(lm(1),i))-U(lm(4),i)+U(lm(5),i) ) < 0
+            elseif ( (1/h)*(U(lm(2),i)-U(lm(1),i))-0.5*(LT(lm(1),i)+LT(lm(2),i))+0.5*(LC(lm(1),i)+LC(lm(2),i)) ) < 0
                 
             end
             
